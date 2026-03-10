@@ -8,7 +8,7 @@
 
 I thought I built an AI assistant. Turns out, *it* built *me* a job.
 
-**Bgent** is a Markdown-native kanban & scheduling framework inspired by reverse proxy architecture. The AI Agent is the **Client** — generating plans, issuing deadlines, and managing your board. **You** are the sole **Upstream Node**: the biological backend responsible for all physical execution.
+**Bgent** is a Markdown-native kanban & scheduling framework. The AI Agent is the **Client** — generating plans, issuing deadlines, and managing your board. **You** are the sole **Upstream Node**: the biological backend responsible for all physical execution.
 
 There is no auto-scaling. There is no load balancer. There is only you.
 
