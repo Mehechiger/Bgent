@@ -1,9 +1,11 @@
-# Bgent Meta Protocol — Agent 行为宪法模板
+# Bgent Meta Protocol — Agent 行为规则参考
 
 <!--
-  本文件定义 AI Agent 在本项目中的行为规则。
-  将它放至 `.gemini/GEMINI.md`（或你的 Agent 平台指定的配置文件路径）。
-  根据你使用的 Agent 平台（Cursor / Windsurf / Copilot / Antigravity）调整路径。
+  本文件定义 AI Agent 在 Bgent 管理的项目中应遵守的行为规则。
+  你可以将这些规则整合到你的 Agent 平台全局配置中，
+  或者在 SKILL 安装后由 Agent 自动加载。
+
+  当前版本针对 Antigravity 优化。
   
   使用说明：
   - [CUSTOMIZE] 标记的地方需要你根据项目情况修改
@@ -30,9 +32,9 @@
 
 ### 3. 结项仪式 (Closing Ritual)
 
-当有实质产出的任务完成时（不含简单问答），执行结项仪式：
+当有实质产出的任务完成时（不含简单问答），Agent 执行结项仪式：
 
-1. **记忆写入**：追加结构化摘要到 `~/.gemini/memory/YYYY-MM-DD.md`
+1. **记忆写入**：追加结构化摘要到 `.agent/memory/YYYY-MM-DD.md`
    ```markdown
    ## HH:MM — [对话主题简述]
    - [做了什么，1句]
@@ -68,7 +70,7 @@
 
 ### 记忆管理
 
-- **长期记忆写入**：用户显式要求"记住"某信息时 → Agent 必须先提炼表述，向用户发送预览确认后再写入 `~/.gemini/MEMORY.md`
+- **长期记忆写入**：用户显式要求"记住"某信息时 → Agent 必须先提炼表述，向用户发送预览确认后再写入 `.agent/MEMORY.md`
 - **Monthly Review**：`daily_briefing.py` 检测到上次审核超 30 天 → 提醒执行 MEMORY.md 审核
 
 ### 工作流
@@ -77,7 +79,3 @@
 - **防遗漏**：执行重构时，修改前列出关键功能点清单，修改后逐项确认
 
 <!-- [CUSTOMIZE] 按需添加你项目特有的触发式规则 -->
-<!-- 例如：
-- **上下文重建路由**：当提及特定模块/功能时 → 加载对应的设计文档
-- **代码审查**：提交前 → 运行 lint + 测试
--->

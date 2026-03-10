@@ -14,9 +14,9 @@ Agent 不直接读取 AGENT_STATE.md（太长、太杂），
    - 来源: AGENT_STATE.md
 
 2. 跨对话记忆加载
-   - 读取 ~/.gemini/MEMORY.md（长期记忆：用户偏好/事实/教训）
-   - 读取 ~/.gemini/memory/YYYY-MM-DD.md（今天+昨天的 daily log）
-   - 来源: ~/.gemini/memory/ + ~/.gemini/MEMORY.md
+   - 读取 .agent/MEMORY.md（长期记忆：用户偏好/事实/教训）
+   - 读取 .agent/memory/YYYY-MM-DD.md（今天+昨天的 daily log）
+   - 来源: .agent/memory/ + .agent/MEMORY.md
 
 3. 记忆生命周期管理
    - 归档检测: 14 天前的 daily log → 提示调用 archive_memory.py
@@ -34,11 +34,22 @@ from datetime import datetime, timedelta
 from pathlib import Path
 
 # --- 默认配置 ---
-MEMORY_DIR = Path.home() / ".gemini" / "memory"
-MEMORY_FILE = Path.home() / ".gemini" / "MEMORY.md"
-MEMORY_ARCHIVE_DIR = MEMORY_DIR / "archive"
-LAST_ARCHIVE_FILE = MEMORY_DIR / ".last_archive"
+# 记忆路径在运行时基于 project root 动态设置
+MEMORY_DIR = None
+MEMORY_FILE = None
+MEMORY_ARCHIVE_DIR = None
+LAST_ARCHIVE_FILE = None
 DAILY_LOG_RETENTION_DAYS = 14
+
+
+def init_memory_paths(project_root: Path):
+    """基于项目根目录初始化记忆路径（.agent/ 子目录）"""
+    global MEMORY_DIR, MEMORY_FILE, MEMORY_ARCHIVE_DIR, LAST_ARCHIVE_FILE
+    bgent_dir = project_root / ".agent"
+    MEMORY_DIR = bgent_dir / "memory"
+    MEMORY_FILE = bgent_dir / "MEMORY.md"
+    MEMORY_ARCHIVE_DIR = MEMORY_DIR / "archive"
+    LAST_ARCHIVE_FILE = MEMORY_DIR / ".last_archive"
 
 
 def archive_old_daily_logs():
@@ -431,6 +442,9 @@ def main():
         project_root = Path(args.project_root).resolve()
     else:
         project_root = Path(__file__).resolve().parent.parent
+
+    # 初始化记忆路径
+    init_memory_paths(project_root)
 
     agent_state_file = project_root / "AGENT_STATE.md"
 

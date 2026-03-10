@@ -7,37 +7,46 @@
 - daily_briefing.py archive_old_daily_logs()（检测待归档文件）
 
 用法:
-    python scripts/archive_memory.py           # 归档所有超龄文件
-    python scripts/archive_memory.py --dry-run  # 仅预览，不执行
+    python scripts/archive_memory.py --project-root ./           # 归档所有超龄文件
+    python scripts/archive_memory.py --project-root ./ --dry-run  # 仅预览，不执行
 """
 
 from datetime import datetime, timedelta
 from pathlib import Path
 
-MEMORY_DIR = Path.home() / ".gemini" / "memory"
-ARCHIVE_DIR = MEMORY_DIR / "archive"
-LAST_ARCHIVE_FILE = MEMORY_DIR / ".last_archive"
 RETENTION_DAYS = 14
 
 
 def main():
     import argparse
     parser = argparse.ArgumentParser(description="归档超过 14 天的 daily log")
+    parser.add_argument("--project-root", type=str, default=None,
+                        help="项目根目录路径。默认使用脚本所在目录的上一级。")
     parser.add_argument("--dry-run", action="store_true", help="仅预览，不执行移动")
     args = parser.parse_args()
 
-    if not MEMORY_DIR.exists():
+    # 确定项目根目录
+    if args.project_root:
+        project_root = Path(args.project_root).resolve()
+    else:
+        project_root = Path(__file__).resolve().parent.parent
+
+    memory_dir = project_root / ".agent" / "memory"
+    archive_dir = memory_dir / "archive"
+    last_archive_file = memory_dir / ".last_archive"
+
+    if not memory_dir.exists():
         print("ℹ️ 记忆目录不存在，无需归档")
         return
 
     cutoff = datetime.now() - timedelta(days=RETENTION_DAYS)
     targets = []
 
-    for f in sorted(MEMORY_DIR.glob("*.md")):
+    for f in sorted(memory_dir.glob("*.md")):
         try:
             file_date = datetime.strptime(f.stem, "%Y-%m-%d")
             if file_date < cutoff:
-                dest_dir = ARCHIVE_DIR / f"{file_date.year}" / f"{file_date.month:02d}"
+                dest_dir = archive_dir / f"{file_date.year}" / f"{file_date.month:02d}"
                 targets.append((f, dest_dir / f.name))
         except ValueError:
             continue
@@ -57,10 +66,10 @@ def main():
     action = "预览" if args.dry_run else "已归档"
     print(f"\n{action} {len(targets)} 个文件")
 
-    # 更新归档标记（完成本次周期检查，重置 14 天倒计时）
+    # 更新归档标记
     if not args.dry_run:
         today = datetime.now().strftime("%Y-%m-%d")
-        LAST_ARCHIVE_FILE.write_text(today, encoding="utf-8")
+        last_archive_file.write_text(today, encoding="utf-8")
         print(f"📌 归档周期标记已更新: {today}（下个检测周期: 14 天后）")
 
 

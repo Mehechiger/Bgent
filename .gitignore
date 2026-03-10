@@ -19,3 +19,6 @@ Thumbs.db
 
 # Temporary
 tmp/
+
+# Agent memory (personal data, not committed)
+.agent/memory/
