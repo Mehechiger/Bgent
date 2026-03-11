@@ -49,7 +49,7 @@ See the [Chinese README](./README.md) for a detailed first-use guide and archite
 
 ## License
 
-MIT — Because even indentured servants deserve open-source tooling.
+WTFPL (Do What The F*ck You Want To Public License) — Because even cyber indentured servants are too lazy to care about copyright. Do whatever you want.
 
 ## Contributing
 

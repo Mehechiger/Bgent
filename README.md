@@ -136,7 +136,7 @@ graph LR
 
 ## 许可证
 
-MIT — 因为即便是赛博长工，也配拥有开源工具。
+WTFPL (Do What The F*ck You Want To Public License) — 因为即便是赛博长工，也懒得管版权了，拿去随便用。
 
 ## 参与贡献
 
