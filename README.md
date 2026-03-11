@@ -27,7 +27,7 @@
 - 📅 **滚动排产调度** — 双周滑动窗口 + 精力约束 + 弹性置换缓冲区。Agent 帮你安排日程，你只管执行。
 - 📄 **纯 Markdown** — 无数据库、无 SaaS、无厂商锁定。只有 `.md` 文件，和你永远清不完的待办列表。
 
-> 当前版本针对 [Antigravity](https://www.cursor.com/) 优化。核心看板格式兼容任何能读写 Markdown 的 AI Agent 平台。
+> 当前版本针对 [Antigravity](https://antigravity.google) 优化。核心看板格式兼容任何能读写 Markdown 的 AI Agent 平台。
 
 ## 快速开始
 

@@ -27,7 +27,7 @@ Congratulations — you are now officially employed by your own codebase.
 - 📅 **Rolling Scheduler** — Two-week sliding window with capacity constraints and displacement buffers. The Agent schedules, you execute.
 - 📄 **Pure Markdown** — No databases, no SaaS, no vendor lock-in. Just `.md` files and the crushing weight of your to-do list.
 
-> Currently optimized for [Antigravity](https://www.cursor.com/). Core kanban format is compatible with any AI Agent that can read/write Markdown.
+> Currently optimized for [Antigravity](https://antigravity.google). Core kanban format is compatible with any AI Agent that can read/write Markdown.
 
 ## Quick Start
 
